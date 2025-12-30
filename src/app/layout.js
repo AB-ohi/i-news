@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/component/shred/Navbar/Navbar";
 import Footer from "@/component/shred/Footer/Footer";
 
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
