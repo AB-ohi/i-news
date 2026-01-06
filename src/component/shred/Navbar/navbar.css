@@ -16,7 +16,9 @@
 }
 .navBarList a:hover {
   background: #4facfe;
-  color: black;
+  color: rgb(0, 0, 125);
+  border: 1px #4facfe solid;
+  border-radius: 5px;
 }
 .search {
   display: flex;
