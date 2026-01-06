@@ -186,7 +186,7 @@ const Navbar = () => {
         <div 
           className={`
             flex items-center gap-3 bg-white/10 backdrop-blur-md 
-            rounded-full border border-white/20 px-5 py-3
+            rounded-full border border-white/20 px-5 py-1
             transition-all duration-500 ease-out
             ${isFocused ? 'w-80 shadow-2xl shadow-purple-500/50 border-purple-400/50' : 'w-64 shadow-lg'}
             hover:shadow-xl hover:shadow-purple-500/30
