@@ -1,3 +1,24 @@
-.navList{
-    
+.navbar {
+  background: rgb(0, 0, 125);
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
+}
+.navBarList {
+  display: flex;
+  gap: 10px;
+}
+.navBarList a {
+  border: 1px white solid;
+  color: white;
+  padding: 5px 10px;
+  transition: 0.5s;
+}
+.navBarList a:hover {
+  background: #4facfe;
+  color: black;
+}
+.search {
+  display: flex;
+  align-items: center;
 }
