@@ -6,13 +6,19 @@ import TimeLoader from "../../../../public/ImgForHome/timeLoader.gif";
 import Image from "next/image";
 import Link from "next/link";
 import { CiSearch } from "react-icons/ci";
+import {  Noto_Serif_Bengali } from 'next/font/google'
+const bengaliFont = Noto_Serif_Bengali({
+  weight: ['700'],
+  subsets: ['bengali'],
+  display: 'swap',
+})
 const Navbar = () => {
   const [currentDate, setCurrentDate] = useState(null);
   const [isFocused, setIsFocused] = useState(false);
   useEffect(() => {
     setCurrentDate(new Date());
   }, []);
- const [time, setTime] = useState(new Date());
+  const [time, setTime] = useState(new Date());
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -23,26 +29,46 @@ const Navbar = () => {
   }, []);
 
   const formatTime = (date) => {
-    const hours = date.getHours().toString().padStart(2, '0');
-    const minutes = date.getMinutes().toString().padStart(2, '0');
-    const seconds = date.getSeconds().toString().padStart(2, '0');
+    const hours = date.getHours().toString().padStart(2, "0");
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+    const seconds = date.getSeconds().toString().padStart(2, "0");
     return { hours, minutes, seconds };
   };
 
   const formatDate = (date) => {
-    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    
+    const days = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+    const months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+
     const dayName = days[date.getDay()];
     const day = date.getDate();
     const month = months[date.getMonth()];
     const year = date.getFullYear();
-    
+
     return `${dayName}, ${month} ${day}, ${year}`;
   };
 
   const { hours, minutes, seconds } = formatTime(time);
-
 
   return (
     <>
@@ -53,7 +79,7 @@ const Navbar = () => {
         <div className="w-full">
           <div className="flex justify-between items-center z-40 fixed w-full top-0 bg-white">
             <Image
-              className="w-24 ml-1.5 md:block hidden my-1.5"
+              className="w-24 ml-1.5 rounded-[50%] md:block hidden my-1.5"
               src={INewsLogo}
               alt=""
             />
@@ -62,9 +88,9 @@ const Navbar = () => {
                 <span className="text-blue-700">I News</span>{" "}
                 <span className="text-red-500">24</span>
               </h1>
-              <p
+              <p className={bengaliFont.className}
                 style={{
-                  fontFamily: "'Noto Serif Bengali', serif",
+                  fontFamily:  "'Tiro Bangla', 'Noto Serif Bengali', serif",
                   fontWeight: "700",
                 }}
               >
@@ -112,16 +138,13 @@ const Navbar = () => {
 
                         <div className="date-wrapper">
                           <div className="date-glow"></div>
-                          
                         </div>
-
-                        
                       </div>
                     </div>
                   ) : (
                     <Image className="w-[130px]" src={TimeLoader} alt="" />
                   )}
-                  <div>
+                  <div className="dateAndDay">
                     <h1>
                       {currentDate?.toLocaleDateString("en-BD", {
                         weekday: "long",
