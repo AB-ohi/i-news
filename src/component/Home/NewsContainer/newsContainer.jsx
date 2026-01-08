@@ -7,11 +7,11 @@ const NewsContainer = () => {
     <div className='homeNewsCards'>
         <div className='mainCard'>
             {/* card heading */}
-            <h1>Darun News</h1>
+            <h1 className='cardHeading'>Darun News</h1>
             {/* new heading */}
             <p>Kawha kader ar jonno nijer hate kabor kurte prostut miraj afridi</p>
             <Image className='mainCardImg' src={demoImage} alt="" />
-            
+
             <p></p>
         </div>
         <div>
