@@ -11,9 +11,51 @@
   width: 100%;
 }
 
-.cardHeading {
-  width: 300px;
-  height: 150px;
-  background: #3b82f6;
-  clip-path: polygon(0 0, 100% 20%, 100% 100%, 0 80%);
+.headline{
+    padding: 10px 0;
 }
+
+.cardHeading {
+clip-path: polygon(0% 0%, 85% 0%, 100% 50%, 85% 100%, 0% 100%, 15% 50%);
+      background: linear-gradient(90deg,rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
+      width: 211px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      position: relative;
+      animation: pulse-glow 2s ease-in-out infinite;
+}
+
+ .polygon-box-1::before {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      clip-path: polygon(0% 0%, 90% 0%, 100% 30%, 90% 60%, 0% 60%, 15% 35%);
+      background: linear-gradient(135deg, #60a5fa, #3b82f6, #2563eb);
+      z-index: -1;
+      opacity: 0;
+      animation: border-glow 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% {
+        box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        transform: scale(1);
+      }
+      50% {
+        box-shadow: 0 0 40px rgba(59, 130, 246, 0.8);
+        transform: scale(1.05);
+      }
+    }
+
+    @keyframes border-glow {
+      0%, 100% {
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+    }

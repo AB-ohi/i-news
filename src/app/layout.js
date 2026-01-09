@@ -2,14 +2,23 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/component/shred/Navbar/Navbar";
 import Footer from "@/component/shred/Footer/Footer";
-import { Hind_Siliguri } from 'next/font/google'
+import { Hind_Siliguri, Noto_Serif_Bengali } from "next/font/google";
 
+// Body text এর জন্য - clean & readable
 const hindSiliguri = Hind_Siliguri({
-  weight: ['400', '700'],
+  weight: ['400', '600', '700'],
   subsets: ['bengali'],
-  variable: '--font-bengali',
-  display: 'swap',
-})
+  variable: '--font-bengali-body',
+  display: "swap",
+});
+
+// Heading/Tagline এর জন্য - bold & elegant
+const notoSerif = Noto_Serif_Bengali({
+  weight: ['600', '700'],
+  subsets: ['bengali'],
+  variable: '--font-bengali-heading',
+  display: "swap",
+});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,13 +37,13 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="bn">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased ${hindSiliguri.variable}`}
+        className={`${geistSans.variable} ${geistMono.variable} ${hindSiliguri.variable} ${notoSerif.variable} antialiased`}
       >
-        <Navbar/>
+        <Navbar />
         {children}
-        <Footer/>
+        <Footer />
       </body>
     </html>
   );
