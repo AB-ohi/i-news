@@ -10,5 +10,9 @@
 
 }
 .sideImg{
-    width: 40%;
+    width: 280px;
+    height: 150px;
+}
+.newsCardDetails{
+    width: 280px;
 }
