@@ -1,0 +1,7 @@
+.mainContent{
+    width: 95%;
+    margin: auto;
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+}

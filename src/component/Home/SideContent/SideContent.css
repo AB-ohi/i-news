@@ -1,0 +1,14 @@
+.sideContentMain{
+    width: 40%;
+}
+.sideCard{
+    width: 100%;
+    /* display: flex;
+    align-items: start; */
+    margin-bottom: 10px;
+    border: solid 2px rgb(98, 98, 239);
+
+}
+.sideImg{
+    width: 40%;
+}

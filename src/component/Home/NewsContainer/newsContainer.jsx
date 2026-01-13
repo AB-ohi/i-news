@@ -4,8 +4,8 @@ import Image from 'next/image';
 import "./NewsContainer.css";
 const NewsContainer = () => {
   return (
-    <div className='homeNewsCards'>
-        <div className='mainCard'>
+    <div className='mainCard'>
+        <div>
             {/* card heading */}
             <h1 className='cardHeading'>Darun News</h1>
             {/* new heading */}
@@ -14,9 +14,7 @@ const NewsContainer = () => {
 
             <p></p>
         </div>
-        <div>
 
-        </div>
     </div>
   )
 }
