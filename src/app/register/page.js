@@ -1,8 +1,7 @@
 import React from "react";
 import "./reg.css";
 import Image from "next/image";
-import reg_img from "../../../public/all_img/regbg.png";
-import logo_img from "../../../public/ImgForHome/INewsLogo.png";
+import logo_img from "../../../public/ImgForHome/reg_img.jpg";
 
 const Register = () => {
   return (
@@ -41,17 +40,17 @@ const Register = () => {
 
         {/* Right Side - Image */}
         <div className="img_for_singUp">
+          <div className="welcome_text">
+            <h2>Welcome to I News 24</h2>
+            <p>Your trusted news platform</p>
+          </div>
           
           <Image
-            className="w-[35%] absolute top-1/4 left-1/2 transform -translate-x-1/2 rounded-full"
+            className=" "
             src={logo_img}
             alt="logo"
           />
           
-          <div className="welcome_text">
-            <h2>Welcome to iNews</h2>
-            <p>Your trusted news platform</p>
-          </div>
         </div>
 
       </div>

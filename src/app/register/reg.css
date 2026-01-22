@@ -4,7 +4,7 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: linear-gradient(135deg, #e0f2fe 0%, #ddd6fe 50%, #fce7f3 100%);
+    background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #1e4682 100%);
     padding: 20px;
 }
 
@@ -16,7 +16,7 @@
     background: white;
     border-radius: 30px;
     overflow: hidden;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     animation: fadeInUp 0.6s ease-out;
 }
 
@@ -52,7 +52,7 @@
 .sign_up_information h1 {
     font-size: 42px;
     font-weight: 700;
-    color: #1f2937;
+    color: #1e3a8a;
     margin-bottom: 10px;
     animation: fadeIn 0.8s ease-out 0.2s both;
 }
@@ -67,7 +67,7 @@
 }
 
 .sign_up_information p {
-    color: #6b7280;
+    color: #64748b;
     margin-bottom: 40px;
     font-size: 15px;
     animation: fadeIn 0.8s ease-out 0.3s both;
@@ -88,14 +88,14 @@
     display: block;
     font-size: 14px;
     font-weight: 500;
-    color: #374151;
+    color: #1e3a8a;
     margin-bottom: 8px;
 }
 
 .form_group input {
     width: 100%;
     padding: 14px 16px;
-    border: 2px solid #e5e7eb;
+    border: 2px solid #e2e8f0;
     border-radius: 12px;
     font-size: 15px;
     transition: all 0.3s ease;
@@ -103,20 +103,20 @@
 }
 
 .form_group input:focus {
-    border-color: #a78bfa;
-    box-shadow: 0 0 0 4px rgba(167, 139, 250, 0.1);
+    border-color: #ef4444;
+    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
     transform: translateY(-2px);
 }
 
 .form_group input::placeholder {
-    color: #9ca3af;
+    color: #94a3b8;
 }
 
 /* Submit button */
 .submit_btn {
     width: 100%;
     padding: 14px;
-    background: linear-gradient(135deg, #a78bfa 0%, #c084fc 100%);
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
     border: none;
     border-radius: 12px;
     color: white;
@@ -124,14 +124,14 @@
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(167, 139, 250, 0.3);
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
     animation: fadeIn 0.8s ease-out 0.8s both;
 }
 
 .submit_btn:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(167, 139, 250, 0.4);
-    background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%);
+    box-shadow: 0 8px 25px rgba(239, 68, 68, 0.4);
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
 }
 
 .submit_btn:active {
@@ -143,89 +143,47 @@
     text-align: center;
     margin-top: 20px;
     font-size: 14px;
-    color: #6b7280;
+    color: #64748b;
     animation: fadeIn 0.8s ease-out 0.9s both;
 }
 
 .login_link a {
-    color: #a78bfa;
+    color: #ef4444;
     font-weight: 600;
     text-decoration: none;
     transition: all 0.3s ease;
 }
 
 .login_link a:hover {
-    color: #8b5cf6;
+    color: #dc2626;
     text-decoration: underline;
 }
 
 /* Right side - Image section */
 .img_for_singUp {
     flex: 1;
-    background: linear-gradient(135deg, #c7d2fe 0%, #ddd6fe 50%, #fbcfe8 100%);
-    position: relative;
+    gap: 50px;
+    background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 50%, #93c5fd 100%);
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
     padding: 40px;
     overflow: hidden;
 }
 
-/* Animated decorative circles */
-.img_for_singUp::before {
-    content: '';
-    position: absolute;
-    top: 40px;
-    left: 40px;
-    width: 100px;
-    height: 100px;
-    background: rgba(255, 255, 255, 0.4);
-    border-radius: 50%;
-    filter: blur(30px);
-    animation: float 6s ease-in-out infinite;
-}
 
-@keyframes float {
-    0%, 100% {
-        transform: translate(0, 0);
-    }
-    50% {
-        transform: translate(20px, 20px);
-    }
-}
 
-.img_for_singUp::after {
-    content: '';
-    position: absolute;
-    bottom: 40px;
-    right: 40px;
-    width: 140px;
-    height: 140px;
-    background: rgba(255, 255, 255, 0.4);
-    border-radius: 50%;
-    filter: blur(40px);
-    animation: float 8s ease-in-out infinite reverse;
-}
-
-/* Logo animation */
-.img_for_singUp img {
-    animation: scaleIn 0.8s ease-out 0.3s both;
-}
 
 @keyframes scaleIn {
     from {
         opacity: 0;
-        transform: translate(-50%, -50%) scale(0.8);
+        transform: translate(-50%, -50%) scale(0.8) rotate(-10deg);
     }
     to {
         opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
+        transform: translate(-50%, -50%) scale(1) rotate(0deg);
     }
-}
-
-/* Pulse animation for logo */
-.img_for_singUp img:hover {
-    animation: pulse 1.5s ease-in-out infinite;
 }
 
 @keyframes pulse {
@@ -239,25 +197,19 @@
 
 /* Welcome text at bottom */
 .welcome_text {
-    position: absolute;
-    bottom: 50px;
-    left: 50%;
-    transform: translateX(-50%);
     text-align: center;
-    z-index: 10;
-    animation: fadeInUp 0.8s ease-out 0.5s both;
 }
 
 .welcome_text h2 {
     font-size: 24px;
     font-weight: 700;
-    color: #374151;
+    color: #1e3a8a;
     margin-bottom: 8px;
 }
 
 .welcome_text p {
     font-size: 14px;
-    color: #6b7280;
+    color: #475569;
 }
 
 /* Responsive design */
