@@ -3,8 +3,8 @@ import "./globals.css";
 import Navbar from "@/component/shred/Navbar/Navbar";
 import Footer from "@/component/shred/Footer/Footer";
 import { Hind_Siliguri, Noto_Serif_Bengali } from "next/font/google";
+import { AuthProvider } from "./Context/AuthContext";
 
-// Body text এর জন্য - clean & readable
 const hindSiliguri = Hind_Siliguri({
   weight: ['400', '600', '700'],
   subsets: ['bengali'],
@@ -12,7 +12,6 @@ const hindSiliguri = Hind_Siliguri({
   display: "swap",
 });
 
-// Heading/Tagline এর জন্য - bold & elegant
 const notoSerif = Noto_Serif_Bengali({
   weight: ['600', '700'],
   subsets: ['bengali'],
@@ -38,13 +37,15 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="bn">
-      <body
+     <AuthProvider>
+       <body
         className={`${geistSans.variable} ${geistMono.variable} ${hindSiliguri.variable} ${notoSerif.variable} antialiased`}
       >
         <Navbar />
         {children}
         <Footer />
       </body>
+     </AuthProvider>
     </html>
   );
 }

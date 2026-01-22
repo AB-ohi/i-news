@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { CiSearch } from "react-icons/ci";
 import {  Noto_Serif_Bengali } from 'next/font/google'
+import { usePathname } from "next/navigation";
 const bengaliFont = Noto_Serif_Bengali({
   weight: ['700'],
   subsets: ['bengali'],
@@ -15,6 +16,7 @@ const bengaliFont = Noto_Serif_Bengali({
 const Navbar = () => {
   const [currentDate, setCurrentDate] = useState(null);
   const [isFocused, setIsFocused] = useState(false);
+  const pathName = usePathname()
   useEffect(() => {
     setCurrentDate(new Date());
   }, []);
@@ -27,7 +29,9 @@ const Navbar = () => {
 
     return () => clearInterval(timer);
   }, []);
-
+ if(pathName.startsWith("/login")|| pathName.startsWith("/register")){
+  return null;
+ }
   const formatTime = (date) => {
     const hours = date.getHours().toString().padStart(2, "0");
     const minutes = date.getMinutes().toString().padStart(2, "0");
@@ -253,6 +257,7 @@ const Navbar = () => {
           `}
             />
           </div>
+            <button><Link className="text-[#00007d] bg-amber-50 px-2 border-2 duration-300 ease-in rounded-2xl transition-all  hover:bg-[#00007d] hover:text-amber-50" href='/login'>Login</Link></button>
         </nav>
       </div>
     </>

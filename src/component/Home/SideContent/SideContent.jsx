@@ -37,7 +37,7 @@ const SideContent = () => {
           <div className="sideCard" key={index}>
             <img className="sideImg" src={news.img} alt="" />
             <div className="newsCardDetails">
-              <h1>{lineSlice(news.headline, 7)}</h1>
+              <h1 className="text-lg">{lineSlice(news.headline, 7)}</h1>
               {/* <p>{news.description}</p> */}
             </div>
           </div>
