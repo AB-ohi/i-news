@@ -27,7 +27,7 @@ export const AuthProvider = ({children}) => {
             setUser(createUser);
             setLoading(false)
         })
-        return unsubscribe();
+        return unsubscribe;
     },[])
     const authInfo ={
         signIn,
