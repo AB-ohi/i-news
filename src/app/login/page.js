@@ -1,11 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import I_news_logo from "../../../public/ImgForHome/INewsLogo.png"
+import Link from "next/link";
+import { AuthContext } from "../Context/AuthContext";
 
 const LoginPage = () => {
+  const {signIn, user} = useContext(AuthContext)
   const router = useRouter();
   const [formData, setFormData] = useState({
     email: "",
@@ -21,49 +24,34 @@ const LoginPage = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
-    setLoading(true);
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+  setError("");
+  setLoading(true);
+  try {
+    const result = await signIn(formData.email, formData.password);
 
-    try {
-      const response = await fetch("http://localhost:5000/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await response.json();
-      console.log(data)
-      if (data.success) {
-        // Token localStorage এ save করুন
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("user", JSON.stringify(data.user));
-        
-        // Success message
-        alert("Login successful!");
-        
-        // Redirect to home or dashboard
-        router.push("/");
-      } else {
-        setError(data.message || "Login failed");
-      }
-    } catch (err) {
-      setError("Something went wrong. Please try again.");
-      console.error(err);
-    } finally {
-      setLoading(false);
+    if (result?.user) {
+      router.push("/");
+    } else {
+      setError("Can't login your account");
     }
-  };
+  } catch (err) {
+    console.error(err);
+    setError("Email বা password ভুল");
+  } finally {
+    setLoading(false);
+  }
+};
+
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <div>
           <div className="flex items-center justify-center">
-            <Image src={I_news_logo} className="w-24 rounded-full"></Image>
+            <Image src={I_news_logo} alt="sds" className="w-24 rounded-full"></Image>
           </div>
           
           <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
@@ -124,9 +112,9 @@ const LoginPage = () => {
 
         <p className="text-center mt-4 text-gray-600">
           নতুন user?{" "}
-          <a href="/register" className="text-blue-500 hover:underline">
+          <Link href="/register" className="text-blue-500 hover:underline">
             Register করুন
-          </a>
+          </Link>
         </p>
       </div>
     </div>

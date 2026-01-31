@@ -1,6 +1,6 @@
 "use client";
 import "./navbar.css";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import INewsLogo from "../../../../public/ImgForHome/INewsLogo.png";
 import TimeLoader from "../../../../public/ImgForHome/timeLoader.gif";
 import Image from "next/image";
@@ -8,15 +8,21 @@ import Link from "next/link";
 import { CiSearch } from "react-icons/ci";
 import {  Noto_Serif_Bengali } from 'next/font/google'
 import { usePathname } from "next/navigation";
+import { AuthContext } from "@/app/Context/AuthContext";
+import profileImg from '../../../../public/all_img/profileImg.webp'
+import useUserData from "@/middleware/User";
 const bengaliFont = Noto_Serif_Bengali({
   weight: ['700'],
   subsets: ['bengali'],
   display: 'swap',
 })
 const Navbar = () => {
+  const {user, logOut} = useContext(AuthContext);
+  // console.log(user)
   const [currentDate, setCurrentDate] = useState(null);
   const [isFocused, setIsFocused] = useState(false);
   const pathName = usePathname()
+  const {singleUser} = useUserData([]) 
   useEffect(() => {
     setCurrentDate(new Date());
   }, []);
@@ -29,7 +35,7 @@ const Navbar = () => {
 
     return () => clearInterval(timer);
   }, []);
- if(pathName.startsWith("/login")|| pathName.startsWith("/register")){
+ if(pathName.startsWith("/login")|| pathName.startsWith("/register") || pathName.startsWith("/Dashboard")){
   return null;
  }
   const formatTime = (date) => {
@@ -73,6 +79,9 @@ const Navbar = () => {
   };
 
   const { hours, minutes, seconds } = formatTime(time);
+  const handelLogout = ()=>{
+    logOut()
+  }
 
   return (
     <>
@@ -257,7 +266,21 @@ const Navbar = () => {
           `}
             />
           </div>
-            <button><Link className="text-[#00007d] bg-amber-50 px-2 border-2 duration-300 ease-in rounded-2xl transition-all  hover:bg-[#00007d] hover:text-amber-50" href='/login'>Login</Link></button>
+          <Link href={``}>
+            {
+            user === null? (
+              <div>
+                <button><Link className="text-[#00007d] bg-amber-50 px-2 border-2 duration-300 ease-in rounded-2xl transition-all  hover:bg-[#00007d] hover:text-amber-50" href='/login'>Login</Link></button>
+               
+              </div>
+            ):(
+              <div className="flex items-center">
+                <Link href={`/Dashboard?user=${singleUser.displayName}&role=${singleUser.role}`}><Image className="w-7  rounded-full " src={user?.photoURL || profileImg}/></Link>
+                <button className="text-amber-100" onClick={handelLogout}>Log Out</button>
+              </div>
+            )
+          }  
+          </Link>
         </nav>
       </div>
     </>

@@ -11,7 +11,7 @@ export const AuthProvider = ({children}) => {
 
     const signIn = (email, password) =>{
         setLoading(true)
-        return signInWithEmailAndPassword(auth,password, email)
+        return signInWithEmailAndPassword(auth,email, password)
     }
     const createUser= (email, password) => {
         setLoading(true);
@@ -32,7 +32,9 @@ export const AuthProvider = ({children}) => {
     const authInfo ={
         signIn,
         createUser,
-        logOut
+        logOut,
+        user,
+        loading,
     }
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
