@@ -1,8 +1,11 @@
 "use client";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../Context/AuthContext";
+import Link from "next/link";
 
 const Page = () => {
+  const {user} = useContext(AuthContext)
   const searchParams = useSearchParams();
   const displayName = searchParams.get("user");
   const [singleUser, setSingleUser] = useState(null);
@@ -19,7 +22,9 @@ const Page = () => {
 
   return (
     <div>
-      {singleUser ?
+      {
+        user? (
+          singleUser ?
       (
         
         singleUser?.role =='user' ?(
@@ -35,7 +40,14 @@ const Page = () => {
        
       ):(
         <p>Lading...</p>
-      )}
+      )
+        ): (
+          <div>
+            go back login Page 
+            <Link href='/login'>Login</Link>
+          </div>
+        )
+      }
     </div>
   );
 };
