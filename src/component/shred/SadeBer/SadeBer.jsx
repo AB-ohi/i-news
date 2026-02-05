@@ -6,6 +6,8 @@ import useRole from "@/middleware/useRole";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import './sadeBer.css';
+import Image from "next/image";
+import emptyProfilePicture from "../../../../public/all_img/emptyProfilePicture.jpg"
 
 const SideBar = () => {
   const { user, logOut } = useContext(AuthContext);
@@ -15,6 +17,7 @@ const SideBar = () => {
 
   // Get current user data
   const singleUser = allUser?.find(u => u.email === user?.email);
+  console.log(singleUser)
 
   const handleLogout = async () => {
     try {
@@ -31,6 +34,7 @@ const SideBar = () => {
     { name: "Content Publish", path: `/Dashboard/content-publish?user=${singleUser?.displayName}&role=${singleUser?.role}` },
     { name: "User Manage", path: `/Dashboard/user-manage?user=${singleUser?.displayName}&role=${singleUser?.role}` },
     { name: "Post", path: `/Dashboard/post?user=${singleUser?.displayName}&role=${singleUser?.role}` },
+    { name: "Home", path: '/' },
   ];
 
   // Editor Links
@@ -51,7 +55,17 @@ const SideBar = () => {
         user? (
           isAdmin ? (
         <div className="sidebar-content">
-          <h3 className="role-badge">Admin</h3>
+         
+                <Image className="w-3/6 align-middle flex m-auto rounded-full" 
+                src={
+                  user.photoURL ||
+                  (singleUser && singleUser.photoURL) ||
+                  emptyProfilePicture
+                }
+                 width={500}
+  height={500}
+                alt=""/>
+             
           <nav className="sidebar-nav">
             {adminLinks.map((link, index) => (
               <Link 
@@ -109,7 +123,7 @@ const SideBar = () => {
         </div>
       )
         ):(
-          <div> user cant found</div>
+          <div> user can't found</div>
         )
       }
     </div>

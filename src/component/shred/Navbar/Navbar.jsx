@@ -23,7 +23,9 @@ const Navbar = () => {
   const [isFocused, setIsFocused] = useState(false);
   const pathName = usePathname()
   const {singleUser} = useUserData([]) 
+  console.log(singleUser)
   useEffect(() => {
+
     setCurrentDate(new Date());
   }, []);
   const [time, setTime] = useState(new Date());
@@ -79,9 +81,6 @@ const Navbar = () => {
   };
 
   const { hours, minutes, seconds } = formatTime(time);
-  const handelLogout = ()=>{
-    logOut()
-  }
 
   return (
     <>
@@ -276,7 +275,7 @@ const Navbar = () => {
             ):(
               <div className="flex items-center">
                 <Link href={`/Dashboard?user=${singleUser.displayName}&role=${singleUser.role}`}><Image className="w-7  rounded-full " src={user?.photoURL || profileImg}/></Link>
-                <button className="text-amber-100" onClick={handelLogout}>Log Out</button>
+                
               </div>
             )
           }  
