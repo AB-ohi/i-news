@@ -17,7 +17,7 @@ const SideBar = () => {
 
   // Get current user data
   const singleUser = allUser?.find(u => u.email === user?.email);
-  console.log(singleUser)
+  // console.log(singleUser)
 
   const handleLogout = async () => {
     try {

@@ -21,14 +21,14 @@ const Register = () => {
         setLoading(true);
         setError('');
         setSuccess('');
-        let firebaseUid = "";
+        
         const form = e.target;
         const name = form.name.value;
         const email = form.email.value;
         const number = form.number.value;
         const password = form.password.value;
         const confirm_password = form.confirm_password.value;
-        const displayName =  `${name}${Date.now().toString(36)+Math.random().toString(36).substring(2)}`
+        const displayName = `${name}${Date.now().toString(36)+Math.random().toString(36).substring(2)}`;
         
         // Validation
         if (!name || !email || !password || !confirm_password || !number) {
@@ -49,19 +49,28 @@ const Register = () => {
             return;
         }
         
-        
         try {
+            const userCredential = await createUser(email, password);
+            const user = userCredential.user;
+            const firebaseUid = user.uid;
             
-            await createUser(email, password)
-            .then((res =>{
-                const user = res.user;
-                firebaseUid = user.uid
-                return updateProfile(user,{
-                    displayName,
-                    phoneNumber: number
-                });
-            }))
-            const userData = {name, displayName, email, password, confirm_password, number, uid:firebaseUid };
+            await updateProfile(user, {
+                displayName,
+                phoneNumber: number
+            });
+            
+            console.log('✅ Firebase user created:', firebaseUid);
+            
+            const userData = {
+                name,
+                displayName,
+                email,
+                password,
+                number,
+                uid: firebaseUid
+            };
+            
+            console.log('📤 Sending to MongoDB:', userData);
             
             const response = await fetch('http://localhost:5000/register', {
                 method: "POST",
@@ -71,51 +80,78 @@ const Register = () => {
                 body: JSON.stringify(userData)
             });
             
+            const data = await response.json();
+            console.log('📥 MongoDB response:', data);
+            
             if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.message || 'Registration failed');
+                throw new Error(data.message || 'Database registration failed');
             }
             
-            const data = await response.json();
-            setSuccess("Account created successfully!");
+            console.log('✅ User saved to MongoDB');
             
+            // Step 4: Success
+            setSuccess("Account created successfully! Redirecting...");
+            form.reset();
+          
             setTimeout(() => {
-                router.push('/');
-            }, 1500);
+                window.location.href = '/';
+            }, 2000);
             
         } catch (error) {
-            console.error("Registration error:", error);
+            console.error("❌ Registration error:", error);
             setError(error.message || "Failed to create account. Please try again.");
         } finally {
             setLoading(false);
         }
-        
-        console.log(userData);
     }
     
     return (
         <div className="reg_page">
             <div className="signUp_container">
                 <form onSubmit={handelSubmitReg} className='sign_up_information'>
-                    <Link href='/' className="text-4xl text-blue-900 font-light ">
+                    <Link href='/' className="text-4xl text-blue-900 font-light">
                         <CiSquareChevLeft />
                     </Link>
                     
                     <h1>Sign Up</h1>
                     <p>Create your account to get started</p>
 
+                    {/* Loading Indicator */}
+                    {loading && (
+                        <div className="loading-message bg-blue-100 text-blue-700 p-4 rounded-md mb-4 flex items-center gap-3">
+                            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-blue-700"></div>
+                            <div>
+                                <p className="font-semibold">Creating your account...</p>
+                                <p className="text-sm">Please wait, this may take a moment</p>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Success Message */}
                     {success && (
-                        <div className="success-message text-green-600 bg-green-100 p-3 rounded-md mb-4">
-                            {success}
+                        <div className="success-message text-green-700 bg-green-100 p-4 rounded-md mb-4 flex items-center gap-3">
+                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                            </svg>
+                            <div>
+                                <p className="font-semibold">{success}</p>
+                            </div>
                         </div>
                     )}
                     
+                    {/* Error Message */}
                     {error && (
-                        <div className="error-message text-red-600 bg-red-100 p-3 rounded-md mb-4">
-                            {error}
+                        <div className="error-message text-red-700 bg-red-100 p-4 rounded-md mb-4 flex items-center gap-3">
+                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                            <div>
+                                <p className="font-semibold">{error}</p>
+                            </div>
                         </div>
                     )}
-                    {/* name */}
+
+                    {/* Form Fields */}
                     <div className="form_group">
                         <label>Full Name</label>
                         <input 
@@ -126,7 +162,7 @@ const Register = () => {
                             disabled={loading}
                         />
                     </div>
-                    {/* email */}
+
                     <div className="form_group">
                         <label>Email Address</label>
                         <input 
@@ -138,16 +174,12 @@ const Register = () => {
                         />
                     </div>
 
-                    {/* phone */}
                     <div className="form_group">
                         <label>Phone Number</label>
                         <input 
-                        onInput={(e) => {
-                            e.target.value = e.target.value.replace(
-                              /[^0-9.]/g,
-                              ""
-                            );
-                          }}
+                            onInput={(e) => {
+                                e.target.value = e.target.value.replace(/[^0-9]/g, "");
+                            }}
                             type="text" 
                             name="number" 
                             placeholder="Enter your Phone Number" 
@@ -155,19 +187,19 @@ const Register = () => {
                             disabled={loading}
                         />
                     </div>
-                    {/* pass */}
+
                     <div className="form_group">
                         <label>Password</label>
                         <input 
                             type="password" 
                             name="password" 
-                            placeholder="Create a password" 
+                            placeholder="Create a password (min 6 characters)" 
                             required
                             disabled={loading}
                             minLength={6}
                         />
                     </div>
-                    {/* confirm pass */}
+
                     <div className="form_group">
                         <label>Confirm Password</label>
                         <input 
@@ -181,11 +213,18 @@ const Register = () => {
                     </div>
 
                     <button 
-                        className="submit_btn" 
+                        className={`submit_btn ${loading ? 'opacity-70 cursor-not-allowed' : ''}`}
                         type="submit"
                         disabled={loading}
                     >
-                        {loading ? 'Creating Account...' : 'Create Account'}
+                        {loading ? (
+                            <span className="flex items-center justify-center gap-2">
+                                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                                Creating Account...
+                            </span>
+                        ) : (
+                            'Create Account'
+                        )}
                     </button>
 
                     <div className="login_link">

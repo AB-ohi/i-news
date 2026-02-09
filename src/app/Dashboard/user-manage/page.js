@@ -10,9 +10,37 @@ const Page = () => {
   console.log(allUser);
 
   const handleRoleChange = (userId, newRole) => {
-    // Role change করার function
-    console.log(`Changing role for user ${userId} to ${newRole}`);
-    // এখানে API call করবেন
+   Swal.fire({
+      title: `Change role to "${newRole}"?`,
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, change it!",
+    }).then((result)=>{
+        if(result.isConfirmed){
+            fetch(`http://localhost:5000/user-role/${userId}`,{
+                method:"PATCH",
+                headers:{
+                    "Content-type": "application/json",
+                },
+                body: JSON.stringify({ role: newRole }),
+            })
+            .then(res => res.json())
+            .then((data)=>{
+                 if (data.modifiedCount > 0) {
+              Swal.fire({
+                icon: "success",
+                title: "Your work has been saved",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+            }
+            reset();
+            window.location.reload();
+            })
+        }
+    })
   };
 
   const handleDeleteUser = async (userId) => {
@@ -25,12 +53,10 @@ const Page = () => {
           headers: {
             "Content-Type": "application/json",
           },
-        },
-      );
+        });
       const data = await response.json();
       if (data.success) {
         Swal.fire({
-          position: "top-end",
           icon: "success",
           title: "Your work has been saved",
           showConfirmButton: false,
@@ -64,7 +90,7 @@ const Page = () => {
   }
 
   return (
-    <div className="p-6 min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div className="p-6 min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 w-[80%]">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="bg-white rounded-t-2xl shadow-lg p-6 border-b">
