@@ -6,26 +6,26 @@ import TimeLoader from "../../../../public/ImgForHome/timeLoader.gif";
 import Image from "next/image";
 import Link from "next/link";
 import { CiSearch } from "react-icons/ci";
-import {  Noto_Serif_Bengali } from 'next/font/google'
+import { Noto_Serif_Bengali } from "next/font/google";
 import { usePathname } from "next/navigation";
 import { AuthContext } from "@/app/Context/AuthContext";
-import profileImg from '../../../../public/all_img/profileImg.webp'
+import profileImg from "../../../../public/all_img/profileImg.webp";
 import useUserData from "@/middleware/User";
 const bengaliFont = Noto_Serif_Bengali({
-  weight: ['700'],
-  subsets: ['bengali'],
-  display: 'swap',
-})
+  weight: ["700"],
+  subsets: ["bengali"],
+  display: "swap",
+});
 const Navbar = () => {
-  const {user, logOut} = useContext(AuthContext);
+  const { user, logOut } = useContext(AuthContext);
   // console.log(user)
   const [currentDate, setCurrentDate] = useState(null);
   const [isFocused, setIsFocused] = useState(false);
-  const pathName = usePathname()
-  const {singleUser} = useUserData([]) 
+  // const pathname = usePathname();
+  const pathName = usePathname();
+  const { singleUser } = useUserData([]);
   // console.log(singleUser)
   useEffect(() => {
-
     setCurrentDate(new Date());
   }, []);
   const [time, setTime] = useState(new Date());
@@ -37,9 +37,13 @@ const Navbar = () => {
 
     return () => clearInterval(timer);
   }, []);
- if(pathName.startsWith("/login")|| pathName.startsWith("/register") || pathName.startsWith("/Dashboard")){
-  return null;
- }
+  if (
+    pathName.startsWith("/login") ||
+    pathName.startsWith("/register") ||
+    pathName.startsWith("/Dashboard")
+  ) {
+    return null;
+  }
   const formatTime = (date) => {
     const hours = date.getHours().toString().padStart(2, "0");
     const minutes = date.getMinutes().toString().padStart(2, "0");
@@ -81,6 +85,17 @@ const Navbar = () => {
   };
 
   const { hours, minutes, seconds } = formatTime(time);
+  const categories = [
+    { label: "সর্বশেষ", value: "/" },
+    { label: "রাজনীতি", value: "politics" },
+    { label: "সারাদেশ", value: "national" },
+    { label: "আন্তর্জাতিক", value: "international" },
+    { label: "বাণিজ্য", value: "business" },
+    { label: "খেলা", value: "sports" },
+    { label: "আইন আদালত", value: "law" },
+    { label: "বিনোদন", value: "entertainment" },
+    { label: "ধর্ম", value: "religion" },
+  ];
 
   return (
     <>
@@ -100,9 +115,10 @@ const Navbar = () => {
                 <span className="text-blue-700">I News</span>{" "}
                 <span className="text-red-500">24</span>
               </h1>
-              <p className={bengaliFont.className}
+              <p
+                className={bengaliFont.className}
                 style={{
-                  fontFamily:  "'Tiro Bangla', 'Noto Serif Bengali', serif",
+                  fontFamily: "'Tiro Bangla', 'Noto Serif Bengali', serif",
                   fontWeight: "700",
                 }}
               >
@@ -187,33 +203,23 @@ const Navbar = () => {
 
         <nav className="bav navbar mt-[120.6px]">
           <ul className="navBarList">
-            <Link href="/">
-              <li>হোম</li>
-            </Link>
-            <Link href="/latest">
-              <li>সর্বশেষ</li>
-            </Link>
-            <Link href="#">
-              <li>সারাদেশ</li>
-            </Link>
-            <Link href="#">
-              <li>আন্তর্জাতিক</li>
-            </Link>
-            <Link href="#">
-              <li>বাণিজ্য</li>
-            </Link>
-            <Link href="#">
-              <li>খেলা</li>
-            </Link>
-            <Link href="#">
-              <li>আইন আদালত</li>
-            </Link>
-            <Link href="#">
-              <li>বিনোদন</li>
-            </Link>
-            <Link href="#">
-              <li>ধর্ম</li>
-            </Link>
+            {categories.map((cat) => (
+              <Link
+                key={cat.value}
+                href={cat.value === "/" ? "/" : `/post/${cat.value}`}
+              >
+                <li
+                  className={`cursor-pointer px-2 py-1 ${
+                    pathname ===
+                    (cat.value === "/" ? "/" : `/post/${cat.value}`)
+                      ? "text-red-500 font-bold border-b-2 border-red-500"
+                      : "text-black"
+                  }`}
+                >
+                  {cat.label}
+                </li>
+              </Link>
+            ))}
           </ul>
           <div className="">
             <div
@@ -266,19 +272,29 @@ const Navbar = () => {
             />
           </div>
           <Link href={``}>
-            {
-            user === null? (
+            {user === null ? (
               <div>
-                <button><Link className="text-[#00007d] bg-amber-50 px-2 border-2 duration-300 ease-in rounded-2xl transition-all  hover:bg-[#00007d] hover:text-amber-50" href='/login'>Login</Link></button>
-               
+                <button>
+                  <Link
+                    className="text-[#00007d] bg-amber-50 px-2 border-2 duration-300 ease-in rounded-2xl transition-all  hover:bg-[#00007d] hover:text-amber-50"
+                    href="/login"
+                  >
+                    Login
+                  </Link>
+                </button>
               </div>
-            ):(
+            ) : (
               <div className="flex items-center">
-                <Link href={`/Dashboard?user=${singleUser.displayName}&role=${singleUser.role}`}><Image className="w-7  rounded-full " src={user?.photoURL || profileImg}/></Link>
-                
+                <Link
+                  href={`/Dashboard?user=${singleUser.displayName}&role=${singleUser.role}`}
+                >
+                  <Image
+                    className="w-7  rounded-full "
+                    src={user?.photoURL || profileImg}
+                  />
+                </Link>
               </div>
-            )
-          }  
+            )}
           </Link>
         </nav>
       </div>
