@@ -41,7 +41,7 @@
 }
 
 .navBarList a:hover {
-  color: rgb(0, 0, 125);
+  color: #00007d;
   border: 2px solid #4facfe;
   transform: translateY(-3px);
   box-shadow: 0 6px 12px rgba(79, 172, 254, 0.5);
@@ -214,5 +214,59 @@
   
   .labels {
     gap: 50px;
+  }
+}
+
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Hamburger Icon Animation */
+.hamburger-icon {
+  transition: transform 0.3s ease;
+}
+
+.hamburger-icon.open {
+  transform: rotate(180deg);
+}
+
+/* Mobile Menu Item Hover Effect */
+@media (max-width: 768px) {
+  .navbar {
+    display: none;
+  }
+}
+
+/* Tablet and Mobile Responsive */
+@media (max-width: 1024px) {
+  .navBarList {
+    gap: 6px;
+  }
+
+  .navBarList a {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 768px) {
+  .time-digit {
+    font-size: 16px;
+  }
+  
+  .separator {
+    font-size: 18px;
+  }
+
+  .time-box {
+    padding: 6px 8px;
   }
 }

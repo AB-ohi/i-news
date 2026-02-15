@@ -1,23 +1,24 @@
 "use client";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "@/app/Context/AuthContext";
 import useUserData from "@/middleware/User";
 import useRole from "@/middleware/useRole";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import './sadeBer.css';
+import { useRouter, usePathname } from "next/navigation";
+import "./sadeBer.css";
 import Image from "next/image";
-import emptyProfilePicture from "../../../../public/all_img/emptyProfilePicture.jpg"
+import emptyProfilePicture from "../../../../public/all_img/emptyProfilePicture.jpg";
 
 const SideBar = () => {
   const { user, logOut } = useContext(AuthContext);
   const { isAdmin, isEditor, isUser } = useRole();
   const { allUser } = useUserData();
   const router = useRouter();
+  const pathname = usePathname();
 
-  // Get current user data
-  const singleUser = allUser?.find(u => u.email === user?.email);
-  // console.log(singleUser)
+  const [isOpen, setIsOpen] = useState(false);
+
+  const singleUser = allUser?.find((u) => u.email === user?.email);
 
   const handleLogout = async () => {
     try {
@@ -28,105 +29,83 @@ const SideBar = () => {
     }
   };
 
-  // Admin Links
   const adminLinks = [
-    { name: "Profile", path: `/Dashboard?user=${singleUser?.displayName}&role=${singleUser?.role}` },
-    { name: "Content Publish", path: `/Dashboard/content-publish?user=${singleUser?.displayName}&role=${singleUser?.role}` },
-    { name: "User Manage", path: `/Dashboard/user-manage?user=${singleUser?.displayName}&role=${singleUser?.role}` },
-    { name: "Post", path: `/Dashboard/post?user=${singleUser?.displayName}&role=${singleUser?.role}` },
-    { name: "Home", path: '/' },
+    { name: "Profile", path: `/Dashboard` },
+    { name: "Content Publish", path: `/Dashboard/content-publish` },
+    { name: "User Manage", path: `/Dashboard/user-manage` },
+    { name: "Post", path: `/Dashboard/post` },
+    { name: "Home", path: `/` },
   ];
 
-  // Editor Links
   const editorLinks = [
-    { name: "Profile", path: `/Dashboard?user=${singleUser?.displayName}&role=${singleUser?.role}` },
-    { name: "Post", path: `/Dashboard/post?user=${singleUser?.displayName}&role=${singleUser?.role}` },
-    { name: "Content Publish", path: `/Dashboard/content-publish?user=${singleUser?.displayName}&role=${singleUser?.role}` },
+    { name: "Profile", path: `/Dashboard` },
+    { name: "Post", path: `/Dashboard/post` },
+    { name: "Content Publish", path: `/Dashboard/content-publish` },
   ];
 
-  // User Links
   const userLinks = [
-    { name: "Profile", path: `/Dashboard?user=${singleUser?.displayName}&role=${singleUser?.role}` },
+    { name: "Profile", path: `/Dashboard` },
   ];
+
+  const getLinks = () => {
+    if (isAdmin) return adminLinks;
+    if (isEditor) return editorLinks;
+    if (isUser) return userLinks;
+    return [];
+  };
 
   return (
-    <div className="sidebar">
-      {
-        user? (
-          isAdmin ? (
-        <div className="sidebar-content">
-         
-                <Image className="w-3/6 align-middle flex m-auto rounded-full" 
-                src={
-                  user.photoURL ||
-                  (singleUser && singleUser.photoURL) ||
-                  emptyProfilePicture
-                }
-                 width={500}
-  height={500}
-                alt=""/>
-             
-          <nav className="sidebar-nav">
-            {adminLinks.map((link, index) => (
-              <Link 
-                key={index} 
-                href={link.path}
-                className="sidebar-link"
-              >
-                {link.name}
-              </Link>
-            ))}
-            <button onClick={handleLogout} className="sidebar-link logout-btn">
-              Logout
-            </button>
-          </nav>
-        </div>
-      ) : isEditor ? (
-        <div className="sidebar-content">
-          <h3 className="role-badge">Editor</h3>
-          <nav className="sidebar-nav">
-            {editorLinks.map((link, index) => (
-              <Link 
-                key={index} 
-                href={link.path}
-                className="sidebar-link"
-              >
-                {link.name}
-              </Link>
-            ))}
-            <button onClick={handleLogout} className="sidebar-link logout-btn">
-              Logout
-            </button>
-          </nav>
-        </div>
-      ) : isUser ? (
-        <div className="sidebar-content">
-          <h3 className="role-badge">User</h3>
-          <nav className="sidebar-nav">
-            {userLinks.map((link, index) => (
-              <Link 
-                key={index} 
-                href={link.path}
-                className="sidebar-link"
-              >
-                {link.name}
-              </Link>
-            ))}
-            <button onClick={handleLogout} className="sidebar-link logout-btn">
-              Logout
-            </button>
-          </nav>
-        </div>
-      ) : (
-        <div className="sidebar-content">
-          <p>Loading...</p>
-        </div>
-      )
-        ):(
-          <div> user can't found</div>
-        )
-      }
-    </div>
+    <>
+      {/* Hamburger Button */}
+      <button className="hamburger" onClick={() => setIsOpen(!isOpen)}>
+        ☰
+      </button>
+
+      {/* Overlay */}
+      {isOpen && <div className="overlay" onClick={() => setIsOpen(false)}></div>}
+
+      <div className={`sidebar ${isOpen ? "open" : ""}`}>
+        {user ? (
+          <div className="sidebar-content">
+            <Image
+              className="profile-img"
+              src={
+                user.photoURL ||
+                (singleUser && singleUser.photoURL) ||
+                emptyProfilePicture
+              }
+              width={120}
+              height={120}
+              alt="Profile"
+            />
+
+            <nav className="sidebar-nav">
+              {getLinks().map((link, index) => {
+                const isActive = pathname === link.path;
+                return (
+                  <Link
+                    key={index}
+                    href={link.path}
+                    className={`sidebar-link ${isActive ? "active" : ""}`}
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {link.name}
+                  </Link>
+                );
+              })}
+
+              <button onClick={handleLogout} className="sidebar-link logout-btn">
+                Logout
+              </button>
+            </nav>
+          </div>
+        ) : (
+          <div className="sidebar-content">
+            <p>User not found</p>
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 

@@ -90,7 +90,7 @@ const Page = () => {
   }
 
   return (
-    <div className="p-6 min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 w-[80%]">
+    <div className="p-6 min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 md:w-full w-[80%]">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="bg-white rounded-t-2xl shadow-lg p-6 border-b">
