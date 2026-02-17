@@ -30,7 +30,7 @@ const SideBar = () => {
   };
 
   const adminLinks = [
-    { name: "Profile", path: `/Dashboard` },
+    { name: "Profile", path: `/Dashboard?user=${singleUser?.displayName}&role=${singleUser?.role}` },
     { name: "Content Publish", path: `/Dashboard/content-publish` },
     { name: "User Manage", path: `/Dashboard/user-manage` },
     { name: "Post", path: `/Dashboard/post` },

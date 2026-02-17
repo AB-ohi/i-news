@@ -183,7 +183,7 @@ const Navbar = () => {
           </div>
           
           <hr
-            className="border-0 h-1 w-full fixed top-[90px] md:top-[107px] z-40"
+            className="border-0 h-1 w-full fixed top-[75px] md:top-[107px] z-40"
             style={{
               background:
                 "linear-gradient(85deg,rgba(13, 86, 212, 0.6) 19%, rgba(255, 0, 0, 1) 50%, rgba(13, 86, 212, 0.6) 79%)",
@@ -211,7 +211,7 @@ const Navbar = () => {
               </Link>
             ))}
           </ul>
-          
+          {/* search ber */}
           <div className="flex items-center gap-4">
             <div
               className={`
@@ -220,7 +220,7 @@ const Navbar = () => {
                 transition-all duration-500 ease-out
                 ${
                   isFocused
-                    ? "w-80 shadow-2xl shadow-purple-500/50 border-purple-400/50"
+                    ? "w-68 shadow-2xl shadow-purple-500/50 border-purple-400/50"
                     : "w-64 shadow-lg"
                 }
                 hover:shadow-xl hover:shadow-purple-500/30
@@ -258,7 +258,7 @@ const Navbar = () => {
               </Link>
             ) : (
               <Link
-                href={`/Dashboard?user=${singleUser?.name}&role=${singleUser?.role}`}
+                href={`/Dashboard?user=${singleUser?.displayName}&role=${singleUser?.role}`}
               >
                 <Image
                   className="w-8 h-8 rounded-full object-cover"
@@ -370,7 +370,7 @@ const Navbar = () => {
                 </Link>
               ) : (
                 <Link
-                  href={`/Dashboard?user=${singleUser?.name}&role=${singleUser?.role}`}
+                  href={`/Dashboard?user=${singleUser?.displayName}&role=${singleUser?.role}`}
                   className="flex items-center gap-3 bg-white/10 p-3 rounded-xl hover:bg-white/20 transition-colors"
                   onClick={() => setIsMenuOpen(false)}
                 >

@@ -12,6 +12,7 @@ const Page = () => {
   const displayName = searchParams.get("user");
   const [singleUser, setSingleUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  console.log(searchParams)
 
   useEffect(() => {
     if (displayName) {

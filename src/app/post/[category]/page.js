@@ -2,6 +2,7 @@
 import { useParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 
 const page = () => {
   const {category} = useParams();
@@ -16,7 +17,6 @@ const page = () => {
     fetch(`http://localhost:5000/post/${category}`)
       .then(res => res.json())
       .then(data => {
-        // Sort by time - latest first
         const sortedPosts = data.sort((a, b) => 
           new Date(b.post_time) - new Date(a.post_time)
         );
@@ -82,7 +82,7 @@ const page = () => {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
+    <div className="max-w-7xl mt-19.25 md:mt-0 mx-auto px-4 py-8">
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-4xl font-bold text-gray-800 capitalize mb-2">
@@ -121,12 +121,12 @@ const page = () => {
                 <p className="text-gray-600 line-clamp-3 leading-relaxed">
                   {latestPost.post_detail}
                 </p>
-                <button className="mt-4 text-blue-600 font-semibold hover:text-blue-700 flex items-center gap-2">
-                  Read More 
+                <Link href={`/details/${latestPost._id}`} className="mt-4 text-blue-600 font-semibold hover:text-blue-700 flex items-center gap-2">
+                  বিস্তারিত
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
-                </button>
+                </Link>
               </div>
             </div>
           </div>
@@ -165,6 +165,12 @@ const page = () => {
                 <p className="text-sm text-gray-600 line-clamp-2">
                   {post.post_detail}
                 </p>
+                <Link href={`/details/${post._id}`} className="mt-3 text-blue-600 text-sm font-semibold hover:text-blue-700 flex items-center gap-1">
+                    বিস্তারিত 
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </Link>
               </div>
             </div>
           ))}
@@ -205,12 +211,12 @@ const page = () => {
                   <p className="text-sm text-gray-600 line-clamp-3 leading-relaxed">
                     {post.post_detail}
                   </p>
-                  <button className="mt-3 text-blue-600 text-sm font-semibold hover:text-blue-700 flex items-center gap-1">
-                    Read More 
+                  <Link href={`/details/${post._id}`} className="mt-3 text-blue-600 text-sm font-semibold hover:text-blue-700 flex items-center gap-1">
+                    বিস্তারিত 
                     <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
-                  </button>
+                  </Link>
                 </div>
               </div>
             ))}

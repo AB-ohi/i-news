@@ -13,6 +13,7 @@ const IMAGE_UPLOAD_TOKEN = process.env.NEXT_PUBLIC_IMAGE_UPLOAD_TOKEN;
 
 const Page = () => {
   const [images, setImages] = useState([]);
+  const [loading, setLoading] = useState(false);
   const maxNumber = 10;
 
   const onChange = (imageList, addUpdateIndex) => {
@@ -41,7 +42,7 @@ const Page = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setLoading(true)
     if (!isFormValid()) {
       alert("Please fill all fields and upload at least one image");
       return;
@@ -94,6 +95,7 @@ const Page = () => {
       });
       const data = await res.json();
       if (data.insertedId) {
+        setLoading(false)
         Swal.fire({
           icon: "success",
           title: "news post success",
@@ -111,7 +113,6 @@ const Page = () => {
     } catch (error) {
       Swal.fire({
         icon: "error",
-        title: "Oops...",
         text: error.message || "Something went wrong!",
       });
       console.error("Error while uploading product:", error);
@@ -119,8 +120,33 @@ const Page = () => {
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-blue-50 to-indigo-100 p-6 w-[80%]">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-linear-to-br from-blue-50 to-indigo-100 p-6 w-full md:w-[80%]">
+      <div
+        className={`${loading ? "fixed inset-0 z-50 flex flex-col items-center justify-center bg-white/90 backdrop-blur-sm" : ""}`}
+      >
+        {loading && (
+          <>
+            <div className=" relative flex items-center justify-center mb-6">
+              <div className="w-16 h-16 rounded-full border-4 border-gray-200 border-t-red-600 animate-spin"></div>
+              <div
+                className="absolute w-10 h-10 rounded-full border-4 border-transparent border-b-red-400 animate-spin"
+                style={{
+                  animationDirection: "reverse",
+                  animationDuration: "0.6s",
+                }}
+              ></div>
+            </div>
+
+            <p className="text-xl font-semibold text-gray-800 font-serif">
+              পোস্ট আপলোড হচ্ছে...
+            </p>
+            <p className="text-sm text-gray-500 mt-2">
+              অনুগ্রহ করে অপেক্ষা করুন
+            </p>
+          </>
+        )}
+      </div>
+      <div className="max-w-7xl mx-auto md:mt-0 mt-9 ">
         {/* Header */}
         <div className="bg-white rounded-2xl shadow-lg p-6 mb-6">
           <h1 className="text-3xl font-bold text-gray-800">Post New News</h1>
@@ -179,7 +205,6 @@ const Page = () => {
                         </div>
                       </div>
 
-                      {/* Image Grid */}
                       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-6">
                         {imageList.map((image, index) => (
                           <div
@@ -192,7 +217,6 @@ const Page = () => {
                               alt={`Upload ${index + 1}`}
                             />
 
-                            {/* Overlay Buttons */}
                             <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-all duration-300 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100">
                               <button
                                 type="button"
@@ -212,7 +236,6 @@ const Page = () => {
                               </button>
                             </div>
 
-                            {/* Image Number Badge */}
                             <div className="absolute top-2 right-2 bg-blue-600 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center">
                               {index + 1}
                             </div>
@@ -278,7 +301,7 @@ const Page = () => {
           {images?.length > 0 ? (
             <div className="bg-white rounded-2xl shadow-lg p-6 mt-6">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                {/* Left Side - News Details */}
+               
                 <div className="space-y-6">
                   <div>
                     <label className="block text-gray-700 font-semibold mb-2 text-lg">
@@ -327,7 +350,7 @@ const Page = () => {
                   </div>
                 </div>
 
-                {/* Right Side - Heading, Category, Post Time */}
+              
                 <div className="space-y-6">
                   {/* News Heading */}
                   <div>

@@ -76,9 +76,9 @@ const Page = () => {
     }
   };
 
-  if (!allUser || allUser.length === 0) {
+  if (!allUser || allUser.length ===0) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
+      <div className="flex justify-around align-middle">
         <div className="text-center">
           <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-blue-600 mx-auto mb-4"></div>
           <p className="text-xl font-semibold text-gray-700">
@@ -90,7 +90,7 @@ const Page = () => {
   }
 
   return (
-    <div className="p-6 min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 md:w-full w-[80%]">
+    <div className="p-6 min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 w-full md:w-[80%]">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="bg-white rounded-t-2xl shadow-lg p-6 border-b">

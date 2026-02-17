@@ -1,24 +1,31 @@
 "use client";
 import NewsPostImageSlider from "@/component/ImageSlider/ImageSlider";
-import postNews from "@/middleware/postNews";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { MdDeleteForever } from "react-icons/md";
 import PublishedNews from "@/component/publishedNews/publishedNews";
+import usePostNews from "@/middleware/postNews";
 
 const page = () => {
-   const allPostNews = postNews(); 
-  const [allPost, setAllPost] = useState([]);
-  const [loadingId, setLoadingId] = useState(null);
-
-  useEffect(() => {
-    if (allPostNews && allPostNews.length > 0) {
-      setAllPost(allPostNews);
+   const {allPostNews, loading} = usePostNews([]); 
+   const [allPost, setAllPost] = useState([]);
+   const [loadingId, setLoadingId] = useState(null);
+   
+   useEffect(() => {
+     if (allPostNews && allPostNews.length > 0) {
+       setAllPost(allPostNews);
+      }
+    }, [allPostNews]);
+    
+    const holdingPost =allPost.filter((post) => post.status === "holding");
+    console.log(holdingPost)
+    if(loading){
+      return(
+        <div>
+          loading
+        </div>
+      )
     }
-  }, [allPostNews]);
-
-  const holdingPost =
-    allPost.filter((post) => post.status === "holding") || [];
   if (!allPostNews || allPostNews.length === 0) {
     return (
       <div className="w-full max-w-7xl mx-auto p-6">
@@ -93,8 +100,8 @@ const page = () => {
   };
 
   return (
-    <div className="w-[80%] mx-auto space-y-10  mt-2.5 ms-2.5">
-      <div className="mb-8">
+    <div className="md:w-[80%] w-full mx-auto space-y-10  mt-2.5 ms-2.5">
+      <div className="mb-8 md:mt-0 mt-14">
         <h1 className="text-4xl font-bold text-gray-800 mb-2">Latest News</h1>
         <p className="text-gray-600">
           Stay updated with our most recent articles
