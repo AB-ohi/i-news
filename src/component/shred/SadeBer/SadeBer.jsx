@@ -30,10 +30,19 @@ const SideBar = () => {
   };
 
   const adminLinks = [
-    { name: "Profile", path: `/Dashboard?user=${singleUser?.displayName}&role=${singleUser?.role}` },
-    { name: "Content Publish", path: `/Dashboard/content-publish` },
-    { name: "User Manage", path: `/Dashboard/user-manage` },
-    { name: "Post", path: `/Dashboard/post` },
+    {
+      name: "Profile",
+      path: `/Dashboard?user=${singleUser?.displayName}&role=${singleUser?.role}`,
+    },
+    {
+      name: "Post",
+      path: `/Dashboard/post?user=${singleUser?.displayName}&role=${singleUser?.role}`,
+    },
+    {
+      name: "Content Publish",
+      path: `/Dashboard/content-publish?user=${singleUser?.displayName}&role=${singleUser?.role}`,
+    },
+    { name: "User Manage", path: `/Dashboard/user-manage?user=${singleUser?.displayName}&role=${singleUser?.role}` },
     { name: "Home", path: `/` },
   ];
 
@@ -43,9 +52,7 @@ const SideBar = () => {
     { name: "Content Publish", path: `/Dashboard/content-publish` },
   ];
 
-  const userLinks = [
-    { name: "Profile", path: `/Dashboard` },
-  ];
+  const userLinks = [{ name: "Profile", path: `/Dashboard` }];
 
   const getLinks = () => {
     if (isAdmin) return adminLinks;
@@ -62,7 +69,9 @@ const SideBar = () => {
       </button>
 
       {/* Overlay */}
-      {isOpen && <div className="overlay" onClick={() => setIsOpen(false)}></div>}
+      {isOpen && (
+        <div className="overlay" onClick={() => setIsOpen(false)}></div>
+      )}
 
       <div className={`sidebar ${isOpen ? "open" : ""}`}>
         {user ? (
@@ -94,7 +103,10 @@ const SideBar = () => {
                 );
               })}
 
-              <button onClick={handleLogout} className="sidebar-link logout-btn">
+              <button
+                onClick={handleLogout}
+                className="sidebar-link logout-btn"
+              >
                 Logout
               </button>
             </nav>
