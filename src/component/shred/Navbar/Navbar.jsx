@@ -242,9 +242,7 @@ const Navbar = () => {
                 placeholder="Search..."
                 onFocus={() => setIsFocused(true)}
                 onBlur={() => setIsFocused(false)}
-                className="flex bg-transparent border-none outline-none 
-                  text-white placeholder-white/50
-                  text-base w-full"
+                className="flex bg-transparent border-none outline-none text-white placeholder-white/50 text-base w-full"
               />
             </div>
 
