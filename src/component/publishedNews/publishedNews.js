@@ -5,7 +5,7 @@ import { MdDeleteForever } from "react-icons/md";
 import Swal from "sweetalert2";
 
 const PublishedNews = () => {
-  const [postedNews, setPostedNews] = useState([]);
+  const [postedNews, setPostedNews] = useState();
 
   useEffect(() => {
     fetch("https://inews24-server.vercel.app/all-post")

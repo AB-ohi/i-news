@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 const usePostNews = () => {
-  const [allPostNews, setAllPostNews] = useState([]); 
+  const [allPostNews, setAllPostNews] = useState(); 
  const [loading, setLoading] = useState(true);
   useEffect(() => {
     fetch("https://inews24-server.vercel.app/all-post")
