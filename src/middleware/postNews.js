@@ -4,7 +4,7 @@ const usePostNews = () => {
   const [allPostNews, setAllPostNews] = useState([]); 
  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    fetch("http://localhost:5000/all-post")
+    fetch("https://inews24-server.vercel.app/all-post")
       .then((res) => res.json())
       .then((data) => {
         setAllPostNews(Array.isArray(data) ? data : []);

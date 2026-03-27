@@ -8,7 +8,7 @@ const PublishedNews = () => {
   const [postedNews, setPostedNews] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/all-post")
+    fetch("https://inews24-server.vercel.app/all-post")
       .then((res) => res.json())
       .then((data) => {
         setPostedNews(Array.isArray(data) ? data : []);
@@ -38,7 +38,7 @@ const PublishedNews = () => {
       if (res.isConfirmed) {
         try {
           const response = await fetch(
-            `http://localhost:5000/api/post-delete/${id}`,
+            `https://inews24-server.vercel.app/api/post-delete/${id}`,
             {
               method: "DELETE",
             },

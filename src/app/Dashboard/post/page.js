@@ -86,7 +86,7 @@ const Page = () => {
         images: uploadImage,
       };
       console.log("Submitting news data:", newsAllData);
-      const res = await fetch("http://localhost:5000/api/post-news", {
+      const res = await fetch("https://inews24-server.vercel.app/api/post-news", {
         method: "POST",
         headers: {
           "content-type": "application/json",

@@ -11,7 +11,7 @@ const Page = () => {
 
   useEffect(() => {
     if (!params?._id) return;
-    fetch(`http://localhost:5000/api/news/details/${params._id}`)
+    fetch(`https://inews24-server.vercel.app/api/news/details/${params._id}`)
       .then((res) => res.json())
       .then((data) => {
         console.log("API Response:", data);

@@ -10,7 +10,7 @@
 //   useEffect(() => {
 //     if (!params?.id) return;
 
-//     fetch(`http://localhost:5000/api/news/details/${params.id}`)
+//     fetch(`https://inews24-server.vercel.app/api/news/details/${params.id}`)
 //       .then((res) => res.json())
 //       .then((data) => {
 //         console.log(data)

@@ -14,7 +14,7 @@ const page = () => {
 
     setLoading(true);
 
-    fetch(`http://localhost:5000/post/${category}`)
+    fetch(`https://inews24-server.vercel.app/post/${category}`)
       .then(res => res.json())
       .then(data => {
         const sortedPosts = data.sort((a, b) => 

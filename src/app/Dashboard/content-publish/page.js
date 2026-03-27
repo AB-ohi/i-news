@@ -61,7 +61,7 @@ const page = () => {
         setLoadingId(id);
         try {
           const res = await fetch(
-            `http://localhost:5000/api/update-post-status/${id}`,
+            `https://inews24-server.vercel.app/api/update-post-status/${id}`,
             {
               method: "PATCH",
               headers: {

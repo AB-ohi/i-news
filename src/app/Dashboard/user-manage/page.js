@@ -19,7 +19,7 @@ const Page = () => {
       confirmButtonText: "Yes, change it!",
     }).then((result)=>{
         if(result.isConfirmed){
-            fetch(`http://localhost:5000/user-role/${userId}`,{
+            fetch(`https://inews24-server.vercel.app/user-role/${userId}`,{
                 method:"PATCH",
                 headers:{
                     "Content-type": "application/json",
@@ -47,7 +47,7 @@ const Page = () => {
     if (!confirm("Are you sure you want to delete this user?")) return;
     try {
       const response = await fetch(
-        `http://localhost:5000/user_delete/${userId}`,
+        `https://inews24-server.vercel.app/user_delete/${userId}`,
         {
           method: "DELETE",
           headers: {

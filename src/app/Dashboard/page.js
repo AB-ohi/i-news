@@ -16,7 +16,7 @@ const Page = () => {
 
   useEffect(() => {
     if (displayName) {
-      fetch(`http://localhost:5000/singleUser/${displayName}`)
+      fetch(`https://inews24-server.vercel.app/singleUser/${displayName}`)
         .then((res) => res.json())
         .then((data) => {
           setSingleUser(data);

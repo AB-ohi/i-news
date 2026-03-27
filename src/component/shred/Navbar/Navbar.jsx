@@ -26,6 +26,7 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathName = usePathname();
   const { singleUser } = useUserData([]);
+  // console.log(singleUser)
   
   useEffect(() => {
     setCurrentDate(new Date());
