@@ -47,9 +47,9 @@ const SideBar = () => {
   ];
 
   const editorLinks = [
-    { name: "Profile", path: `/Dashboard` },
-    { name: "Post", path: `/Dashboard/post` },
-    { name: "Content Publish", path: `/Dashboard/content-publish` },
+    { name: "Profile", path: `/Dashboard?user=${singleUser?.displayName}&role=${singleUser?.role}` },
+    { name: "Post", path: `/Dashboard/post?user=${singleUser?.displayName}&role=${singleUser?.role}` },
+    { name: "Home", path: `/` },
   ];
 
   const userLinks = [{ name: "Profile", path: `/Dashboard` }];
