@@ -5,7 +5,7 @@ import { useContext } from 'react';
 const useUserData = () => {
     const {user} = useContext(AuthContext)
     // console.log(user)
-    const [singleUser,setSingleUser] = useState();
+    const [singleUser,setSingleUser] = useState([]);
     // console.log(singleUser)
     const [allUser,setAllUser] = useState([])
     useEffect(()=>{
