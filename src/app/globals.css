@@ -34,3 +34,7 @@ h1, h2, h3, .headline, .tagline {
   font-family: var(--font-bengali-heading), serif;
   font-weight: 700;
 }
+
+body{
+  background-color: white;
+}
